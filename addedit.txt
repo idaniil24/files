@@ -1,0 +1,30 @@
+Manager.MainFrame.Navigate(new Page((send as Button).DataContext as Table));
+--------------------------------------------------------------------------------
+   public partial class AddEditPage2 : Page
+    {
+        private Tour _currentTour = new Tour();
+        public AddEditPage2(Tour selectedTour)
+        {
+            InitializeComponent();
+            DataContext = _currentTour;
+            if (selectedTour != null)
+                _currentTour = selectedTour;
+        }
+
+        private void btnsave_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentTour.ID == null)
+                TestDbEntities.GetContext().Tour.Add(_currentTour);
+            try
+            {
+                TestDbEntities.GetContext().SaveChanges();
+                MessageBox.Show("Saved");
+                Manager.MainFrame.GoBack();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+        }
+    }
+}
