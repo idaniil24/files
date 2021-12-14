@@ -1,0 +1,55 @@
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView x:Name="LWTest1" Grid.Row="1">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="120">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="580"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Width="120" Height="120">
+                            <Image.Source>
+                                <Binding Path="ImagePreview">
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>
+                                            /tour/images.png
+                                        </ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
+                        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Padding="10">
+                            <DockPanel>
+                                <StackPanel>
+                                    <TextBlock FontSize="21" FontWeight="Bold">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{} {0} | {1}">
+                                                <Binding Path="Name"/>
+                                                <Binding Path="price"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                    <StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,30,0,0">
+                                            <TextBlock FontSize="14" Text="{Binding Count, StringFormat={} Билетов осталось: {0}}"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock FontSize="14" Text="{Binding Actual, StringFormat={} Актуально: {0}}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontSize="14" HorizontalAlignment="Right"></TextBlock>
+                                    <Button Content="Open" Width="100" Height="30" Margin="0,40,0,0" HorizontalAlignment="Right"></Button>
+                                </StackPanel>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>

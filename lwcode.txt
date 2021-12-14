@@ -1,0 +1,21 @@
+ public partial class Page1 : Page
+    {
+        public Page1()
+        {
+            InitializeComponent();
+            var currenttours = TestDbEntities.GetContext().Tour.ToList();
+            LWTour.ItemsSource = currenttours;
+        }
+
+        private void btnadd_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage2());
+        }
+
+  	private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            TestDbEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
+            LWTour.ItemsSource = TestDbEntities.GetContext().Tour.ToList();
+        }
+    }
+}

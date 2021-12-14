@@ -1,0 +1,16 @@
+Create Trigger TR_Products_AfterInsertUpdate
+on Products
+after Update,Insert
+as
+IF EXISTS(Select * From inserted) And Exists (SELECT * FROM deleted) and Update(MinPrice)
+Begin
+insert into dbo.ProductsHistory ([OldMinPrice], [NewMinPrice], [ProductID], [Date])
+select d.MinPrice, i.MinPrice, d.ID, GETDATE()
+from deleted as d inner join inserted as i on d.ID = i.ID
+end;
+IF EXISTS(Select * From Inserted) and not exists (select * from deleted)
+begin
+insert into dbo.ProductsHistory ([OldMinPrice], [NewMinPrice], [ProductID], [Date])
+select i.MinPrice, i.MinPrice, i.ID, GETDATE()
+from inserted as i
+end;
